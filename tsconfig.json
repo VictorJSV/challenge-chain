@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "strict": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "lib": ["dom", "es2015", "esnext.intl", "es2017.intl", "es2018.intl"],
+    "jsx": "react-jsx",
+    "target": "es5",
+    "allowJs": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "paths": {
+      "@src/*": ["client/src/*"],
+      "@test/*": ["client/test/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["client"]
+}
