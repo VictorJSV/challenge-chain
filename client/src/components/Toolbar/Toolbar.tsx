@@ -13,7 +13,7 @@ export const Toolbar = () => {
     <AppBar position="fixed" color="default" sx={{
       boxShadow: "0px 0px 8px 0px #0000003d"
     }}>
-      <Container maxWidth="lg" sx={{ p: 0 }}>
+      <Container maxWidth="lg">
         <Box sx={{ display: "flex", justifyContent: "space-between" }} py={2}>
           <Box>
             <Typography component="h1" variant="h6">

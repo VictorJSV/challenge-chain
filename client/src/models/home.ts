@@ -8,7 +8,7 @@ export interface HomeState {
   }
 }
 
-interface Country {
+export interface Country {
   name: {
     common: string;
   };
@@ -17,5 +17,10 @@ interface Country {
   };
   population: number;
   region: string;
+  subregion: string;
+  independent: boolean;
   capital: string[];
+  languages: {
+    [key: string]: string;
+  };
 }

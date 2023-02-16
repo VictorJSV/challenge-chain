@@ -1,16 +1,10 @@
-import {
-  Container,
-  Box,
-  Card,
-  Typography,
-  Grid,
-  Skeleton,
-  Snackbar,
-} from "@mui/material";
+import { Box, Card, Typography, Grid, Skeleton, Snackbar } from "@mui/material";
 import { RequestType } from "@src/const/request";
+import { Country } from "@src/models";
 import { filterByCountry, filterByRegion } from "@src/redux/states/home";
 import { ChangeEvent, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Search, SelectFilter } from "./components";
 import { useGetCountries } from "./hooks/useGetCountries";
 import { getRegions } from "./services/country.service";
@@ -18,11 +12,14 @@ import { ImageBox, Image, CardBox, ListBox } from "./styled";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const regions = getRegions();
   const { doRequest, status, data: countriesList, error } = useGetCountries();
 
   useEffect(() => {
-    doRequest();
+    if (!countriesList.length) {
+      doRequest();
+    }
   }, []);
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -33,13 +30,19 @@ const Home = () => {
     dispatch(filterByRegion(value));
   };
 
+  const handleCountryDetail = (country: Country) => {
+    navigate("/country", { state: { country } });
+    dispatch(filterByCountry(""));
+    dispatch(filterByRegion(""));
+  };
+
   if (
     status === RequestType.Idle ||
     status === RequestType.Pending ||
     status === RequestType.Rejected
   ) {
     return (
-      <Container maxWidth="lg">
+      <>
         <CardBox>
           <Skeleton
             variant="rectangular"
@@ -66,12 +69,12 @@ const Home = () => {
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           />
         )}
-      </Container>
+      </>
     );
   }
 
   return (
-    <Container maxWidth="lg">
+    <>
       <CardBox>
         <Search handleInput={handleInput} />
         <SelectFilter
@@ -85,7 +88,11 @@ const Home = () => {
           {countriesList.length ? (
             countriesList.map((x, i) => (
               <Grid item xs={12} sm={4} md={3} key={i}>
-                <Card variant="outlined" sx={{ borderRadius: 2 }}>
+                <Card
+                  variant="outlined"
+                  sx={{ borderRadius: 2, cursor: "pointer" }}
+                  onClick={() => handleCountryDetail(x)}
+                >
                   <ImageBox>
                     <Image src={x.flags.svg} alt={x.name.common} />
                   </ImageBox>
@@ -115,7 +122,7 @@ const Home = () => {
           )}
         </Grid>
       </ListBox>
-    </Container>
+    </>
   );
 };
 
