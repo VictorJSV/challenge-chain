@@ -1,4 +1,3 @@
-import { Box } from "@mui/system";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputBase } from "@mui/material";
 import { BoxStyled } from "./styled";
@@ -13,6 +12,7 @@ export const Search = ({ handleInput }: Props) => {
     <BoxStyled
       px={3}
       py={1}
+      mb={1}
     >
       <SearchIcon />
       <InputBase

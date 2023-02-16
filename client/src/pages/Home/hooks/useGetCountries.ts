@@ -29,9 +29,8 @@ export const useGetCountries = () => {
       all = all.filter((x) => x.region === filterBy.region);
     }
     if (filterBy.country.length) {
-      all = all.filter((x) =>
-        x.name.common.toLowerCase().includes(filterBy.country.toLowerCase())
-      );
+      const reg = new RegExp(filterBy.country.toLowerCase(), "i");
+      all = all.filter((x) => reg.test(x.name.common));
     }
     return all;
   });
@@ -43,3 +42,4 @@ export const useGetCountries = () => {
     error,
   };
 };
+

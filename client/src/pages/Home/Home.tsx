@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { Search, SelectFilter } from "./components";
 import { useGetCountries } from "./hooks/useGetCountries";
 import { getRegions } from "./services/country.service";
-import { ImageBox, Image, CardBox } from "./styled";
+import { ImageBox, Image, CardBox, ListBox } from "./styled";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -41,16 +41,23 @@ const Home = () => {
     return (
       <Container maxWidth="lg">
         <CardBox>
-          <Skeleton variant="rectangular" height={48} width={400} />
+          <Skeleton
+            variant="rectangular"
+            height={48}
+            width={350}
+            sx={{ mb: 1 }}
+          />
           <Skeleton variant="rectangular" height={48} width={180} />
         </CardBox>
-        <Grid container spacing={6} py={4}>
-          {[1, 2, 3, 4].map((x, i) => (
-            <Grid item xs={3} md={3} key={i}>
-              <Skeleton variant="rectangular" height={252} />
-            </Grid>
-          ))}
-        </Grid>
+        <ListBox>
+          <Grid container spacing={6} py={4}>
+            {[1, 2, 3, 4].map((x, i) => (
+              <Grid item xs={12} sm={4} md={3} key={i}>
+                <Skeleton variant="rectangular" height={252} />
+              </Grid>
+            ))}
+          </Grid>
+        </ListBox>
         {error && (
           <Snackbar
             open={true}
@@ -73,39 +80,41 @@ const Home = () => {
           label="Filter by Region"
         />
       </CardBox>
-      <Grid container spacing={6} py={4}>
-        {countriesList.length ? (
-          countriesList.map((x, i) => (
-            <Grid item xs={3} md={3} key={i}>
-              <Card variant="outlined" sx={{ borderRadius: 2 }}>
-                <ImageBox>
-                  <Image src={x.flags.svg} alt={x.name.common} />
-                </ImageBox>
-                <Box p={2}>
-                  <Typography component="h3" variant="h6" gutterBottom>
-                    {x.name.common}
-                  </Typography>
-                  <Typography variant="body1">
-                    <b>Population:</b> {x.population}
-                  </Typography>
-                  <Typography variant="body1">
-                    <b>Region</b>: {x.region}
-                  </Typography>
-                  <Typography variant="body1">
-                    <b>Capital</b>: {x.capital}
-                  </Typography>
-                </Box>
-              </Card>
+      <ListBox>
+        <Grid container spacing={6} py={4}>
+          {countriesList.length ? (
+            countriesList.map((x, i) => (
+              <Grid item xs={12} sm={4} md={3} key={i}>
+                <Card variant="outlined" sx={{ borderRadius: 2 }}>
+                  <ImageBox>
+                    <Image src={x.flags.svg} alt={x.name.common} />
+                  </ImageBox>
+                  <Box p={2}>
+                    <Typography component="h3" variant="h6" gutterBottom>
+                      {x.name.common}
+                    </Typography>
+                    <Typography variant="body1">
+                      <b>Population:</b> {x.population}
+                    </Typography>
+                    <Typography variant="body1">
+                      <b>Region</b>: {x.region}
+                    </Typography>
+                    <Typography variant="body1">
+                      <b>Capital</b>: {x.capital}
+                    </Typography>
+                  </Box>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Grid item>
+              <Typography component="span" variant="h6" gutterBottom>
+                No se encontró resultados
+              </Typography>
             </Grid>
-          ))
-        ) : (
-          <Grid item>
-            <Typography component="span" variant="h6" gutterBottom>
-              No se encontró resultados
-            </Typography>
-          </Grid>
-        )}
-      </Grid>
+          )}
+        </Grid>
+      </ListBox>
     </Container>
   );
 };

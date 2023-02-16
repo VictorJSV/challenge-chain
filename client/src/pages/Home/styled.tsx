@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
-import styled from "styled-components";
+import { Box, BoxProps, styled } from "@mui/material";
+import styledC from "styled-components";
 
-export const Image = styled.img`
+export const Image = styledC.img`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -9,16 +9,30 @@ export const Image = styled.img`
   width: 100%;
 `;
 
-export const ImageBox = styled(Box)({
+export const ImageBox = styled(Box)<BoxProps>({
   height: 140,
   overflow: "hidden",
   position: "relative",
   background: "#EEE",
 });
 
-export const CardBox = styled(Box)({
-  display: "flex",
-  alignItems: "center",
+export const CardBox = styled(Box)<BoxProps>(({ theme }) => ({
+  [theme.breakpoints.up("sm")]: {
+    display: "flex",
+  },
+  alignItems: "start",
   justifyContent: "space-between",
-  margin: "10px 0",
-});
+}));
+
+export const ListBox = styled(Box)<BoxProps>(({ theme }) => ({
+  margin: "0 auto",
+  [theme.breakpoints.up("xs")]: {
+    maxWidth: "300px",
+  },
+  [theme.breakpoints.up("sm")]: {
+    maxWidth: "700px",
+  },
+  [theme.breakpoints.up("md")]: {
+    maxWidth: "inherit",
+  },
+}));

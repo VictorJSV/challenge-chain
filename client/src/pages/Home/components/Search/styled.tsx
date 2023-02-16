@@ -1,11 +1,12 @@
-import { Box } from "@mui/material";
-import styled from "styled-components";
+import { Box, BoxProps, styled } from "@mui/material";
 
-export const BoxStyled = styled(Box)(() => ({
+export const BoxStyled = styled(Box)<BoxProps>(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  minWidth: "400px",
-  background: "white",
+  [theme.breakpoints.up("sm")]: {
+    minWidth: "350px",
+  },
+  background: theme.palette.background.default,
   boxShadow: "0px 0px 4px 0px #6f7a8130",
   borderRadius: 1,
 }));
