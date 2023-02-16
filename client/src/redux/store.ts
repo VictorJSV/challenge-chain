@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { appSlice } from "./states/app";
+import { HomeState } from "@src/models";
+import { homeSlice } from "./states/home";
 
 export interface AppStore {
-  app: any;
+  home: HomeState;
 }
 
 export default configureStore<AppStore>({
   reducer: {
-    app: appSlice.reducer
-  }
+    home: homeSlice.reducer,
+  },
 });

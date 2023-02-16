@@ -1,36 +1,34 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 import store from "./redux/store";
 import { Provider } from "react-redux";
-import {
-  BrowserRouter,
-  Navigate,
-  Outlet,
-  Route,
-  Routes,
-} from "react-router-dom";
-import {
-  Box,
-  createTheme,
-  CssBaseline,
-  PropTypes,
-  ThemeProvider,
-} from "@mui/material";
-import { IntlProvider } from "react-intl";
+import { Box, createTheme, CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+import { Toolbar } from "./components";
+import { Home } from "./pages/Home";
 
-const theme = createTheme({});
+const theme = createTheme({
+  typography: {
+    htmlFontSize: 18,
+  },
+});
 
 export const App = () => {
   return (
     <>
       <CssBaseline />
+      <GlobalStyles
+        styles={{
+          body: { backgroundColor: "#FAFAFA" }
+        }}
+      />
       <Suspense fallback={<>Cargando ...</>}>
-        <IntlProvider locale="en-US">
-          <ThemeProvider theme={theme}>
-            <Provider store={store}>
-              <Box sx={{ marginTop: 12 }}>Hello World</Box>
-            </Provider>
-          </ThemeProvider>
-        </IntlProvider>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <Toolbar />
+            <Box sx={{ marginTop: 12 }}>
+              <Home />
+            </Box>
+          </Provider>
+        </ThemeProvider>
       </Suspense>
     </>
   );
