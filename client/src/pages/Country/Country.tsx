@@ -1,5 +1,6 @@
 import { Button, Card, Grid, Typography } from "@mui/material";
 import { Country } from "@src/models";
+import { FormattedNumber } from "react-intl";
 import { Link, Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -24,22 +25,22 @@ const Country = () => {
             {country.name.common}
           </Typography>
           <Typography variant="body1">
-            <b>Population:</b> {country.population}
+            <b>Population:</b> <FormattedNumber value={country.population} />
           </Typography>
           <Typography variant="body1">
-            <b>Region</b>: {country.region}
+            <b>Region:</b> {country.region}
           </Typography>
           <Typography variant="body1">
-            <b>Subregion</b>: {country.subregion}
+            <b>Subregion:</b> {country.subregion}
           </Typography>
           <Typography variant="body1">
-            <b>Independent</b>: {country.independent ? "Yes" : "No"}
+            <b>Independent:</b> {country.independent ? "Yes" : "No"}
           </Typography>
           <Typography variant="body1">
-            <b>Capital</b>: {country.capital}
+            <b>Capital:</b> {country.capital}
           </Typography>
           <Typography variant="body1">
-            <b>Languages</b>
+            <b>Languages:</b>
           </Typography>
           <ul>
             {Object.keys(country.languages).map((x, i) => (

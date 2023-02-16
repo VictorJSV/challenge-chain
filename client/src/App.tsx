@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Toolbar } from "./components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { IntlProvider } from "react-intl";
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 const Home = lazy(() => import("./pages/Home/Home"));
@@ -44,26 +45,28 @@ export const App = () => {
           </Box>
         }
       >
-        <ColorModeContext.Provider value={colorMode}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <GlobalStyles styles={{ body }} />
-            <Provider store={store}>
-              <Toolbar />
-              <Box mt={12}>
-                <Container maxWidth="lg">
-                  <BrowserRouter>
-                    <Routes>
-                      <Route path="*" element={<>NOT FOUND</>} />
-                      <Route path="/" element={<Home />} />
-                      <Route path="/country" element={<Country />} />
-                    </Routes>
-                  </BrowserRouter>
-                </Container>
-              </Box>
-            </Provider>
-          </ThemeProvider>
-        </ColorModeContext.Provider>
+        <IntlProvider locale="en-US">
+          <ColorModeContext.Provider value={colorMode}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <GlobalStyles styles={{ body }} />
+              <Provider store={store}>
+                <Toolbar />
+                <Box mt={12}>
+                  <Container maxWidth="lg">
+                    <BrowserRouter>
+                      <Routes>
+                        <Route path="*" element={<>NOT FOUND</>} />
+                        <Route path="/" element={<Home />} />
+                        <Route path="/country" element={<Country />} />
+                      </Routes>
+                    </BrowserRouter>
+                  </Container>
+                </Box>
+              </Provider>
+            </ThemeProvider>
+          </ColorModeContext.Provider>
+        </IntlProvider>
       </Suspense>
     </>
   );

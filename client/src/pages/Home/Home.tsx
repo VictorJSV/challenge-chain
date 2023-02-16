@@ -3,6 +3,7 @@ import { RequestType } from "@src/const/request";
 import { Country } from "@src/models";
 import { filterByCountry, filterByRegion } from "@src/redux/states/home";
 import { ChangeEvent, useEffect } from "react";
+import { FormattedNumber, FormattedNumberParts } from "react-intl";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Search, SelectFilter } from "./components";
@@ -101,13 +102,13 @@ const Home = () => {
                       {x.name.common}
                     </Typography>
                     <Typography variant="body1">
-                      <b>Population:</b> {x.population}
+                      <b>Population:</b> <FormattedNumber value={x.population}/>
                     </Typography>
                     <Typography variant="body1">
-                      <b>Region</b>: {x.region}
+                      <b>Region:</b> {x.region}
                     </Typography>
                     <Typography variant="body1">
-                      <b>Capital</b>: {x.capital}
+                      <b>Capital:</b> {x.capital}
                     </Typography>
                   </Box>
                 </Card>
