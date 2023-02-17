@@ -4,16 +4,12 @@ import { BoxStyled } from "./styled";
 import { ChangeEvent } from "react";
 
 interface Props {
-  handleInput: (e: ChangeEvent<HTMLInputElement>) => void
+  handleInput: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Search = ({ handleInput }: Props) => {
   return (
-    <BoxStyled
-      px={3}
-      py={1}
-      mb={1}
-    >
+    <BoxStyled px={3} py={1} mb={1}>
       <SearchIcon />
       <InputBase
         sx={{

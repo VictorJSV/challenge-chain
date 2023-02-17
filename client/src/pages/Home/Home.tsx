@@ -85,10 +85,10 @@ const Home = () => {
         />
       </CardBox>
       <ListBox>
-        <Grid container spacing={6} py={4}>
+        <Grid container spacing={6} py={4} role="list">
           {countriesList.length ? (
             countriesList.map((x, i) => (
-              <Grid item xs={12} sm={4} md={3} key={i}>
+              <Grid item xs={12} sm={4} md={3} key={i} role="listitem">
                 <Card
                   variant="outlined"
                   sx={{ borderRadius: 2, cursor: "pointer" }}
@@ -117,7 +117,7 @@ const Home = () => {
           ) : (
             <Grid item>
               <Typography component="span" variant="h6" gutterBottom>
-                No se encontró resultados
+                No results found
               </Typography>
             </Grid>
           )}

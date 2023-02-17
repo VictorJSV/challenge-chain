@@ -1,8 +1,8 @@
-import { render, screen } from "@test/test-utils";
-import { MemoryRouter } from "react-router-dom";
+import { render, screen, waitFor } from "@test/test-utils";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Country from "./Country";
 import * as services from "../../services/country.service";
-import { countryStateMock } from "@test/mocks/countryMock";
+import { countryStateMock, SOMALIA } from "@test/mocks/countryMock";
 
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
@@ -16,12 +16,27 @@ describe("Country Component", () => {
     jest.restoreAllMocks();
   });
 
+  it("When I load view and it haven't the list of countries preloaded, then it should redirect to home view", async () => {
+    render(
+      <MemoryRouter initialEntries={["/country/som"]}>
+        <Routes>
+          <Route path="/" element={<div id="home"></div>} />
+          <Route path="/country/:code" element={<Country />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("home")).toBeInTheDocument();
+    });
+  });
+
   it("When I load view and it have an error response, then it should show an error message", async () => {
     const mockGetCountry = jest
       .spyOn(services, "getCountry")
       .mockRejectedValue({ error: "Async error message" });
     render(
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={["/country/som"]}>
         <Country />
       </MemoryRouter>,
       {
@@ -38,9 +53,9 @@ describe("Country Component", () => {
   it("When I mockGetCountry country detail view, then it should display data correctly", async () => {
     const mockGetCountry = jest
       .spyOn(services, "getCountry")
-      .mockResolvedValue([countryStateMock.data[0]]);
+      .mockResolvedValue([SOMALIA]);
     render(
-      <MemoryRouter initialEntries={["/"]}>
+      <MemoryRouter initialEntries={["/country/som"]}>
         <Country />
       </MemoryRouter>,
       {
