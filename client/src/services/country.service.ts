@@ -5,6 +5,10 @@ export const getCountries = () => {
   return axios.get(baseUrl + "/all").then((res) => res.data);
 };
 
+export const getCountry = (code: string) => {
+  return axios.get(baseUrl + "/alpha/" + code).then((res) => res.data);
+};
+
 export const getRegions = () => {
   return [
     { id: "1", label: "Africa" },

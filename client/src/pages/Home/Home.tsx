@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Search, SelectFilter } from "./components";
 import { useGetCountries } from "./hooks/useGetCountries";
-import { getRegions } from "./services/country.service";
+import { getRegions } from "../../services/country.service";
 import { ImageBox, Image, CardBox, ListBox } from "./styled";
 
 const Home = () => {
@@ -32,7 +32,7 @@ const Home = () => {
   };
 
   const handleCountryDetail = (country: Country) => {
-    navigate("/country", { state: { country } });
+    navigate("/country/" + country.cca3.toLowerCase());
     dispatch(filterByCountry(""));
     dispatch(filterByRegion(""));
   };

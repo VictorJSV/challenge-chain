@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchCountriesFailure,
   fetchCountriesRequest,
   fetchCountriesSuccess,
 } from "@src/redux/states/home";
-import { AppStore } from "../../../redux/store";
-import { getCountries } from "../services/country.service";
+import { AppStore } from "@src/redux/store";
+import { getCountries } from "@src/services/country.service";
+import { Country } from "@src/models";
 
 export const useGetCountries = () => {
   const dispatch = useDispatch();
@@ -22,9 +22,9 @@ export const useGetCountries = () => {
     }
   };
 
-  const data = useSelector((state: AppStore) => {
-    let all = state.home.data;
+  const data = useSelector((state: AppStore): Country[] => {
     const filterBy = state.home.filterBy;
+    let all = state.home.data;
     if (filterBy.region.length) {
       all = all.filter((x) => x.region === filterBy.region);
     }

@@ -58,7 +58,7 @@ export const App = () => {
                       <Routes>
                         <Route path="*" element={<>NOT FOUND</>} />
                         <Route path="/" element={<Home />} />
-                        <Route path="/country" element={<Country />} />
+                        <Route path="/country/:code" element={<Country />} />
                       </Routes>
                     </BrowserRouter>
                   </Container>
