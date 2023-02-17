@@ -16,7 +16,7 @@ describe("Country Component", () => {
     jest.restoreAllMocks();
   });
 
-  it.only("When I load view and it have an error response, then it should show an error message", async () => {
+  it("When I load view and it have an error response, then it should show an error message", async () => {
     const mockGetCountry = jest
       .spyOn(services, "getCountry")
       .mockRejectedValue({ error: "Async error message" });
@@ -38,11 +38,16 @@ describe("Country Component", () => {
   it("When I mockGetCountry country detail view, then it should display data correctly", async () => {
     const mockGetCountry = jest
       .spyOn(services, "getCountry")
-      .mockResolvedValue([countryStateMock.data]);
+      .mockResolvedValue([countryStateMock.data[0]]);
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Country />
-      </MemoryRouter>
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          home: countryStateMock,
+        },
+      }
     );
 
     expect(mockGetCountry).toHaveBeenCalled();
@@ -51,5 +56,8 @@ describe("Country Component", () => {
     expect(await screen.findByText("Africa")).toBeInTheDocument();
     expect(await screen.findByText("Eastern Africa")).toBeInTheDocument();
     expect(await screen.findByText("Mogadishu")).toBeInTheDocument();
+    expect(await screen.findByText("DJI")).toBeInTheDocument();
+    expect(await screen.findByText("ETH")).toBeInTheDocument();
+    expect(await screen.findByText("KEN")).toBeInTheDocument();
   });
 });

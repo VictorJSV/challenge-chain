@@ -13,7 +13,7 @@ import { useGetCountry } from "./hooks/useGetCountry";
 
 const Country = () => {
   const { code } = useParams();
-  const { data: countriesList } = useAppSelector((state: RootState) => state.home);
+  const countriesList = useAppSelector((state: RootState) => state.home.data);
   const { doRequest, status, data, error } = useGetCountry(countriesList);
 
   useEffect(() => {
@@ -29,7 +29,8 @@ const Country = () => {
   if (
     status === RequestType.Idle ||
     status === RequestType.Pending ||
-    status === RequestType.Rejected
+    status === RequestType.Rejected ||
+    !data
   ) {
     return (
       <>
@@ -52,7 +53,7 @@ const Country = () => {
       </>
     );
   }
-  return data ? (
+  return (
     <Grid container spacing={2}>
       <Grid item>
         <Card>
@@ -120,8 +121,6 @@ const Country = () => {
         </Card>
       </Grid>
     </Grid>
-  ) : (
-    <> No data </>
   );
 };
 export default Country;

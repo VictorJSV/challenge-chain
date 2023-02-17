@@ -10,7 +10,7 @@ export const countryStateMock = {
       },
       borders: ["DJI", "ETH", "KEN"],
       flags: {
-        svg: "",
+        svg: "https://flagcdn.com/so.svg",
       },
       population: 15893219,
       region: "Africa",
