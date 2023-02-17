@@ -4,6 +4,8 @@ import Skeleton from "@mui/material/Skeleton";
 import Snackbar from "@mui/material/Snackbar";
 import { RequestType } from "@src/const/request";
 import { Country } from "@src/models";
+import { useAppSelector } from "@src/redux/hooks";
+import { RootState } from "@src/redux/store";
 import { useEffect } from "react";
 import { FormattedNumber } from "react-intl";
 import { Link as RouterLink, Navigate, useParams } from "react-router-dom";
@@ -11,7 +13,8 @@ import { useGetCountry } from "./hooks/useGetCountry";
 
 const Country = () => {
   const { code } = useParams();
-  const { doRequest, status, data, error } = useGetCountry();
+  const { data: countriesList } = useAppSelector((state: RootState) => state.home);
+  const { doRequest, status, data, error } = useGetCountry(countriesList);
 
   useEffect(() => {
     if (code) {
@@ -19,7 +22,7 @@ const Country = () => {
     }
   }, [code]);
 
-  if (!code) {
+  if (!countriesList.length) {
     return <Navigate to={"/"} replace />;
   }
 

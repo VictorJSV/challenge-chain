@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RequestType } from "@src/const/request";
 import { CountryState } from "@src/models";
+import { RootState } from "../store";
 
 const initialState: CountryState = {
   status: RequestType.Idle,
@@ -41,4 +42,5 @@ export const {
   fetchCountrySuccess,
 } = countrySlice.actions;
 
+export const selectCountry = (state: RootState) => state.country;
 export default countrySlice.reducer;

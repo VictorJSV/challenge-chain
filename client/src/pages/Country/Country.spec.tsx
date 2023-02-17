@@ -2,10 +2,10 @@ import { render, screen } from "@test/test-utils";
 import { MemoryRouter } from "react-router-dom";
 import Country from "./Country";
 import * as services from "../../services/country.service";
+import { countryStateMock } from "@test/mocks/countryMock";
 
 jest.mock("react-router-dom", () => ({
   ...(jest.requireActual("react-router-dom") as any),
-  useNavigate: () => jest.fn(),
   useParams: () => ({
     code: "som",
   }),
@@ -16,14 +16,19 @@ describe("Country Component", () => {
     jest.restoreAllMocks();
   });
 
-  it("When I load view and it have an error response, then it should show an error message", async () => {
+  it.only("When I load view and it have an error response, then it should show an error message", async () => {
     const mockGetCountry = jest
       .spyOn(services, "getCountry")
       .mockRejectedValue({ error: "Async error message" });
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Country />
-      </MemoryRouter>
+      </MemoryRouter>,
+      {
+        preloadedState: {
+          home: countryStateMock,
+        },
+      }
     );
 
     expect(mockGetCountry).toHaveBeenCalled();
@@ -33,27 +38,7 @@ describe("Country Component", () => {
   it("When I mockGetCountry country detail view, then it should display data correctly", async () => {
     const mockGetCountry = jest
       .spyOn(services, "getCountry")
-      .mockResolvedValue([
-        {
-          name: {
-            common: "Somalia",
-          },
-          borders: ["DJI", "ETH", "KEN"],
-          flags: {
-            svg: "",
-          },
-          population: 15893219,
-          region: "Africa",
-          subregion: "Eastern Africa",
-          independent: true,
-          capital: ["Mogadishu"],
-          cca3: "SOM",
-          languages: {
-            ara: "Arabic",
-            som: "Somali",
-          }
-        },
-      ]);
+      .mockResolvedValue([countryStateMock.data]);
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Country />

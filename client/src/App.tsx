@@ -1,5 +1,5 @@
 import { createContext, lazy, Suspense, useState } from "react";
-import store from "./redux/store";
+import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import {
   Box,

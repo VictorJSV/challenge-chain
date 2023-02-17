@@ -1,20 +1,18 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchCountryFailure,
   fetchCountryRequest,
   fetchCountrySuccess,
 } from "@src/redux/states/country";
-import { AppStore } from "../../../redux/store";
+import { RootState } from "@src/redux/store";
 import { getCountry } from "@src/services/country.service";
 import { Country, CountryDetail } from "@src/models";
 
-export const useGetCountry = () => {
+export const useGetCountry = (countriesList: Country[]) => {
   const dispatch = useDispatch();
   const { status, data, error } = useSelector(
-    (store: AppStore) => store.country
+    (store: RootState) => store.country
   );
-  const { data: countriesList } = useSelector((store: AppStore) => store.home);
 
   const hydrateCountry = (country: Country): CountryDetail => ({
     source: country,
@@ -23,7 +21,7 @@ export const useGetCountry = () => {
       country.borders.map((x) => ({
         code: x,
         name: countriesList.length
-          ? (countriesList.find((c) => c.cca3 === x) as Country).name.common
+          ? countriesList.find((c) => c.cca3 === x)?.name.common || x
           : x,
       })),
   });
