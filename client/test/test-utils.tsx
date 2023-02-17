@@ -1,22 +1,9 @@
-import React, { PropsWithChildren, ReactElement } from "react";
+import React, { PropsWithChildren } from "react";
 import { render, RenderOptions } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { AppStore, RootState, setupStore } from "@src/redux/store";
 import { IntlProvider } from "react-intl";
 import type { PreloadedState } from '@reduxjs/toolkit'
-
-/* const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <IntlProvider locale="en-US">
-      <Provider store={store}>{children}</Provider>
-    </IntlProvider>
-  );
-};
-
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, "wrapper">
-) => render(ui, { wrapper: AllTheProviders, ...options }); */
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: PreloadedState<RootState>
