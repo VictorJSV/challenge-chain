@@ -16,6 +16,15 @@ export const useGetCountry = (countriesList: Country[]) => {
 
   const hydrateCountry = (country: Country): CountryDetail => ({
     source: country,
+    nativeName: Object.keys(country.name.nativeName)
+      .slice(-1)
+      .map((x) => country.name.nativeName[x])[0].common,
+    languages: Object.keys(country.languages)
+      .map((x) => country.languages[x])
+      .join(", "),
+    currencies: Object.keys(country.currencies)
+      .map((x) => country.currencies[x].name)
+      .join(", "),
     borderCountries:
       country.borders &&
       country.borders.map((x) => ({

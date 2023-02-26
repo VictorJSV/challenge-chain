@@ -1,6 +1,7 @@
 import { MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState } from "react";
 import { FormControlStyled } from "./styled";
+import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 
 interface Props {
   items: {
@@ -32,6 +33,7 @@ export const SelectFilter = ({ items, label, handleChange }: Props) => {
           }
           return selected;
         }}
+        IconComponent={(props) => <KeyboardArrowDown {...props} />}
       >
         {items.map((item) => (
           <MenuItem key={item.id} value={item.label}>

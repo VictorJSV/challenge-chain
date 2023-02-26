@@ -4,6 +4,9 @@ export const FormControlStyled = styled(FormControl)(({ theme }) => ({
   "& fieldset": { border: "none" },
   ".MuiOutlinedInput-input": { padding: "12px 15px" },
   background: theme.palette.background.default,
-  boxShadow: "0px 0px 4px 0px #6f7a8130",
+  boxShadow: theme.shadows[1],
   borderRadius: 1,
+  [theme.breakpoints.down("sm")]: {
+    marginTop: 30,
+  },
 }));

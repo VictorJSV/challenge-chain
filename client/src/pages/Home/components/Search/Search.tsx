@@ -10,7 +10,7 @@ interface Props {
 export const Search = ({ handleInput }: Props) => {
   return (
     <BoxStyled px={3} py={1} mb={1}>
-      <SearchIcon />
+      <SearchIcon color="inherit" />
       <InputBase
         sx={{
           ml: 1,

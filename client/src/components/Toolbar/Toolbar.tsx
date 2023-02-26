@@ -1,24 +1,35 @@
 import { AppBar, Box, Container, Typography, Button } from "@mui/material";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import Brightness5OutlinedIcon from "@mui/icons-material/Brightness5Outlined";
 import { useContext } from "react";
 import { ColorModeContext } from "@src/App";
 import { useTheme } from "@mui/styles";
 import { Theme } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon } from "@fortawesome/free-regular-svg-icons/faMoon";
+import { TitleTypography } from "./styled";
 
 export const Toolbar = () => {
   const theme: Theme = useTheme();
   const colorMode = useContext(ColorModeContext);
   return (
-    <AppBar position="fixed" color="default" sx={{
-      boxShadow: "0px 0px 8px 0px #0000003d"
-    }}>
+    <AppBar
+      position="fixed"
+      color="inherit"
+      sx={{
+        boxShadow: "0px 0px 8px 0px #0000003d",
+      }}
+    >
       <Container maxWidth="lg">
-        <Box sx={{ display: "flex", justifyContent: "space-between" }} py={2}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          py={2}
+        >
           <Box>
-            <Typography component="h1" variant="h6">
+            <TitleTypography component="h1">
               Where in the world?
-            </Typography>
+            </TitleTypography>
           </Box>
           <Button
             sx={(theme) => ({
@@ -31,9 +42,18 @@ export const Toolbar = () => {
             {theme.palette.mode === "dark" ? (
               <Brightness5OutlinedIcon />
             ) : (
-              <DarkModeOutlinedIcon />
+              <FontAwesomeIcon
+                transform={{ rotate: -20 }}
+                fontSize={16}
+                icon={faMoon}
+              />
             )}
-            <Typography variant="body1" component="span" sx={{ ml: 1 }}>
+            <Typography
+              variant="body1"
+              component="span"
+              fontWeight={600}
+              sx={{ ml: 1 }}
+            >
               {theme.palette.mode === "dark" ? "Light" : "Dark"} mode
             </Typography>
           </Button>

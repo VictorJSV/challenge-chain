@@ -1,4 +1,4 @@
-import { Button, Card, Grid, Typography, Link } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import Snackbar from "@mui/material/Snackbar";
@@ -10,6 +10,14 @@ import { useEffect } from "react";
 import { FormattedNumber } from "react-intl";
 import { Link as RouterLink, Navigate, useParams } from "react-router-dom";
 import { useGetCountry } from "./hooks/useGetCountry";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
+import {
+  CountryButton,
+  CountryDetail,
+  CountryName,
+  DetailGrid,
+} from "./styled";
 
 const Country = () => {
   const { code } = useParams();
@@ -34,14 +42,14 @@ const Country = () => {
   ) {
     return (
       <>
-        <Grid container spacing={2}>
-          <Grid item>
-            <Skeleton variant="rectangular" width={225} height={200} />
+        <DetailGrid container spacing={2} mt={6}>
+          <Grid item md={6}>
+            <Skeleton variant="rectangular" width="100%" height={200} />
           </Grid>
-          <Grid item sx={{ flexGrow: 1 }}>
+          <Grid item md={5} sx={{ flexGrow: 1 }}>
             <Skeleton variant="rectangular" height={200} />
           </Grid>
-        </Grid>
+        </DetailGrid>
         {error && (
           <Snackbar
             open={true}
@@ -54,73 +62,79 @@ const Country = () => {
     );
   }
   return (
-    <Grid container spacing={2}>
-      <Grid item>
-        <Card>
-          <Box sx={{ textAlign: "center" }}>
-            <img
-              src={data.source.flags.svg}
-              alt={data.source.name.common}
-              height={150}
-            />
-          </Box>
+    <>
+      <Button component={RouterLink} sx={{ boxShadow: 2, px: 3 }} to="/">
+        <FontAwesomeIcon icon={faArrowLeft} />{" "}
+        <Typography variant="body1" ml={1}>
+          Back
+        </Typography>
+      </Button>
+      <DetailGrid container spacing={2} mt={6}>
+        <Grid item md={6}>
+          <img
+            src={data.source.flags.svg}
+            alt={data.source.name.common}
+            width="100%"
+          />
+        </Grid>
+        <Grid item md={5} sx={{ flexGrow: 1 }}>
+          <CountryName component="h3" mb={2}>
+            {data.source.name.common}
+          </CountryName>
+          <Grid container spacing={2}>
+            <Grid item sm={6} xs={12}>
+              <CountryDetail>
+                <b>Native Name:</b> {data.nativeName}
+              </CountryDetail>
+              <CountryDetail>
+                <b>Population:</b>{" "}
+                <FormattedNumber value={data.source.population} />
+              </CountryDetail>
+              <CountryDetail>
+                <b>Region:</b> {data.source.region}
+              </CountryDetail>
+              <CountryDetail>
+                <b>Subregion:</b> {data.source.subregion}
+              </CountryDetail>
+              <CountryDetail>
+                <b>Capital:</b> {data.source.capital}
+              </CountryDetail>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <CountryDetail>
+                <b>Top level Domain:</b> {data.source.tld[0]}
+              </CountryDetail>
+              <CountryDetail>
+                <b>Currencies:</b> {data.currencies}
+              </CountryDetail>
+              <CountryDetail>
+                <b>Languages:</b> {data.languages}
+              </CountryDetail>
+            </Grid>
+          </Grid>
           {data.borderCountries?.length && (
-            <Box p={2}>
-              <Typography variant="body1">
-                <b>Border Countries:</b>
+            <Box
+              sx={{ display: { sm: "flex" }, mt: { sm: "70px", xs: "25px" } }}
+            >
+              <Typography variant="body1" fontWeight={800} mr={1}>
+                Border Countries:
               </Typography>
-              <ul>
+              <Box sx={{ flex: 1 }}>
                 {data.borderCountries.map((x, i) => (
-                  <li key={i}>
-                    <Link
-                      component={RouterLink}
-                      underline="hover"
-                      to={"/country/" + x.code.toLowerCase()}
-                    >
-                      {x.name}
-                    </Link>
-                  </li>
+                  <CountryButton
+                    key={i}
+                    component={RouterLink}
+                    to={"/country/" + x.code.toLowerCase()}
+                  >
+                    {x.name}
+                  </CountryButton>
                 ))}
-              </ul>
+              </Box>
             </Box>
           )}
-        </Card>
-      </Grid>
-      <Grid item sx={{ flexGrow: 1 }}>
-        <Card sx={{ p: 2 }}>
-          <Typography component="h3" variant="h6" gutterBottom>
-            {data.source.name.common}
-          </Typography>
-          <Typography variant="body1">
-            <b>Population:</b>{" "}
-            <FormattedNumber value={data.source.population} />
-          </Typography>
-          <Typography variant="body1">
-            <b>Region:</b> {data.source.region}
-          </Typography>
-          <Typography variant="body1">
-            <b>Subregion:</b> {data.source.subregion}
-          </Typography>
-          <Typography variant="body1">
-            <b>Independent:</b> {data.source.independent ? "Yes" : "No"}
-          </Typography>
-          <Typography variant="body1">
-            <b>Capital:</b> {data.source.capital}
-          </Typography>
-          <Typography variant="body1">
-            <b>Languages:</b>
-          </Typography>
-          <ul>
-            {Object.keys(data.source.languages).map((x, i) => (
-              <li key={i}>{data.source.languages[x]}</li>
-            ))}
-          </ul>
-          <Button component={RouterLink} to="/">
-            Regresar
-          </Button>
-        </Card>
-      </Grid>
-    </Grid>
+        </Grid>
+      </DetailGrid>
+    </>
   );
 };
 export default Country;

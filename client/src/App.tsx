@@ -1,4 +1,4 @@
-import { createContext, lazy, Suspense, useState } from "react";
+import { createContext, lazy, Suspense, useMemo, useState } from "react";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import {
@@ -9,14 +9,32 @@ import {
   CssBaseline,
   GlobalStyles,
   ThemeProvider,
+  useTheme,
 } from "@mui/material";
 import { Toolbar } from "./components";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { IntlProvider } from "react-intl";
+import { getConfigTheme, ICustomTheme } from "./configTheme";
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 const Home = lazy(() => import("./pages/Home/Home"));
 const Country = lazy(() => import("./pages/Country/Country"));
+
+const Layout = ({ color }: { color: "primary" | "secondary" }) => {
+  const theme = useTheme<ICustomTheme>();
+  const body = {
+    backgroundColor:
+      color === "primary"
+        ? theme.palette.background.primary
+        : theme.palette.background.secondary,
+  };
+  return (
+    <>
+      <GlobalStyles styles={{ body }} />
+      <Outlet />
+    </>
+  );
+};
 
 export const App = () => {
   const [mode, setMode] = useState<"light" | "dark">("light");
@@ -25,17 +43,7 @@ export const App = () => {
       setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
     },
   };
-  const theme = createTheme({
-    palette: { mode },
-    typography: { htmlFontSize: 18 },
-  });
-  const body = {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.background.default
-        : "#FAFAFA",
-  };
-
+  const theme = useMemo(() => createTheme(getConfigTheme(mode)), [mode]);
   return (
     <>
       <Suspense
@@ -49,16 +57,19 @@ export const App = () => {
           <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
-              <GlobalStyles styles={{ body }} />
               <Provider store={store}>
                 <Toolbar />
-                <Box mt={12}>
+                <Box mt={12} mb={4}>
                   <Container maxWidth="lg">
                     <BrowserRouter>
                       <Routes>
                         <Route path="*" element={<>NOT FOUND</>} />
-                        <Route path="/" element={<Home />} />
-                        <Route path="/country/:code" element={<Country />} />
+                        <Route element={<Layout color="primary" />}>
+                          <Route path="/" element={<Home />} />
+                        </Route>
+                        <Route element={<Layout color="secondary" />}>
+                          <Route path="/country/:code" element={<Country />} />
+                        </Route>
                       </Routes>
                     </BrowserRouter>
                   </Container>

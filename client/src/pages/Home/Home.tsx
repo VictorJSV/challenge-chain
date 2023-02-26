@@ -51,7 +51,7 @@ const Home = () => {
             width={350}
             sx={{ mb: 1 }}
           />
-          <Skeleton variant="rectangular" height={48} width={180} />
+          <Skeleton variant="rectangular" height={48} width={180} sx={{ marginTop: { xs: 5 }}}/>
         </CardBox>
         <ListBox>
           <Grid container spacing={6} py={4}>
@@ -90,15 +90,14 @@ const Home = () => {
             countriesList.map((x, i) => (
               <Grid item xs={12} sm={4} md={3} key={i} role="listitem">
                 <Card
-                  variant="outlined"
-                  sx={{ borderRadius: 2, cursor: "pointer" }}
+                  sx={{ borderRadius: 2, cursor: "pointer", boxShadow: 1 }}
                   onClick={() => handleCountryDetail(x)}
                 >
                   <ImageBox>
                     <Image src={x.flags.svg} alt={x.name.common} />
                   </ImageBox>
-                  <Box p={2}>
-                    <Typography component="h3" variant="h6" gutterBottom>
+                  <Box padding="16px 22px 34px">
+                    <Typography component="h3" variant="h6" fontWeight={800} gutterBottom>
                       {x.name.common}
                     </Typography>
                     <Typography variant="body1">

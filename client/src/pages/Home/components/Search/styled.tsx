@@ -7,6 +7,7 @@ export const BoxStyled = styled(Box)<BoxProps>(({ theme }) => ({
     minWidth: "350px",
   },
   background: theme.palette.background.default,
+  color: theme.palette.text.disabled,
   boxShadow: "0px 0px 4px 0px #6f7a8130",
   borderRadius: 1,
 }));

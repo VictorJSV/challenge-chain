@@ -1,9 +1,19 @@
 import { RequestType } from "@src/const/request";
+import { Country } from "@src/models";
 
-export const SOMALIA = {
+export const SOMALIA: Country = {
   name: {
     common: "Somalia",
+    nativeName: {
+      ara: { official: "جمهورية الصومال‎‎", common: "الصومال‎‎" },
+      som: {
+        official: "Jamhuuriyadda Federaalka Soomaaliya",
+        common: "Soomaaliya",
+      },
+    },
   },
+  tld: [".so"],
+  currencies: { SOS: { name: "Somali shilling", symbol: "Sh" } },
   borders: ["DJI", "ETH", "KEN"],
   flags: {
     svg: "https://flagcdn.com/so.svg",
@@ -27,7 +37,10 @@ export const countryStateMock = {
     {
       name: {
         common: "Iceland",
+        nativeName: { isl: { official: "Ísland", common: "Ísland" } },
       },
+      tld: [".is"],
+      currencies: { ISK: { name: "Icelandic króna", symbol: "kr" } },
       flags: {
         svg: "https://flagcdn.com/is.svg",
       },

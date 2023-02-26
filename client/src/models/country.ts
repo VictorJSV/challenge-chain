@@ -7,7 +7,20 @@ export interface CountryState {
 export interface Country {
   name: {
     common: string;
+    nativeName: {
+      [key: string]: {
+        official: string;
+        common: string;
+      };
+    };
   };
+  currencies: {
+    [key: string]: {
+      name: string;
+      symbol: string;
+    };
+  };
+  tld: string[];
   borders?: string[];
   cca3: string;
   flags: {
@@ -24,9 +37,12 @@ export interface Country {
 }
 
 export interface CountryDetail {
-  source: Country
+  source: Country;
   borderCountries?: {
-    code: string
-    name: string
-  }[]
+    code: string;
+    name: string;
+  }[];
+  nativeName: string;
+  languages: string;
+  currencies: string;
 }
